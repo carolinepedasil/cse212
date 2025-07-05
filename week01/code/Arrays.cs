@@ -1,33 +1,51 @@
+using System;
+using System.Collections.Generic;
+
 public static class Arrays
 {
-    /// <summary>
-    /// This function will produce an array of size 'length' starting with 'number' followed by multiples of 'number'.  For 
-    /// example, MultiplesOf(7, 5) will result in: {7, 14, 21, 28, 35}.  Assume that length is a positive
-    /// integer greater than 0.
-    /// </summary>
-    /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // My thought process:
+        // I want to return an array that contains multiples of a given number
+        // For example, if the number is 3 and I want 5 multiples, I should get: 3, 6, 9, 12, 15
+        // So I'll create an array with the correct length and fill it step-by-step
 
-        return []; // replace this return statement with your own
+        double[] result = new double[length]; // Make space for the result values
+
+        // Loop from 0 to (length - 1) so I can multiply the number by 1, 2, 3, etc
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1); // (i + 1) so I don’t include 0 in the result
+        }
+
+        return result; // Return the filled array of multiples
     }
 
-    /// <summary>
-    /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
-    /// List<int>{1, 2, 3, 4, 5, 6, 7, 8, 9} and an amount is 3 then the list after the function runs should be 
-    /// List<int>{7, 8, 9, 1, 2, 3, 4, 5, 6}.  The value of amount will be in the range of 1 to data.Count, inclusive.
-    ///
-    /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
-    /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Here's how I approached this:
+        // I want to rotate the list to the right by a certain number of steps
+        // That means the last 'amount' of elements should move to the front
+        // For example, if the list is 1 to 9 and I rotate by 3, I expect 7, 8, 9 at the front
+
+        amount %= data.Count; // This is to make sure the amount doesn't go beyond the size of the list
+
+        // If the rotation amount is 0, there's nothing to change
+        if (amount == 0)
+        {
+            return;
+        }
+
+        // Figure out where the "cut" happens—this is where the rotated part starts
+        int start = data.Count - amount;
+
+        // Take the last few elements I want to move
+        List<int> tail = data.GetRange(start, amount);
+
+        // Remove them from the end of the list
+        data.RemoveRange(start, amount);
+
+        // Add them back to the front of the list
+        data.InsertRange(0, tail);
     }
 }
